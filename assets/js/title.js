@@ -11,14 +11,3 @@ export function main(){
     console.log(conf.user);
 }
 
-// ambil nama dan masukan ke title
-function titleFunction(result){
-    if (result.status !== 404){
-        document.title = result.data.name;
-    }
-    else {
-        setInner("content","Silahkan lakukan pendaftaran terlebih dahulu "+result.data.name);
-        redirect("/login");
-    }
-
-}
