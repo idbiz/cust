@@ -7,7 +7,7 @@ if (getCookie("login")===""){
     redirect("/login");
 }
 
-getJSON("https://id.biz.id/data/user","login",getCookie("login"),responseFunction)
+getJSON("https://api.do.my.id/data/user","login",getCookie("login"),responseFunction)
 
 function responseFunction(result){
     if (result.status === 404){
