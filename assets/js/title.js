@@ -1,14 +1,17 @@
-const user = {
-    name: 'Testirex',
-    role: 'Customer',
-}
+async function fetchUser() {
+    try {
+        const response = await fetch('https://id.biz.id/user/data');
+        if (!response.ok) {
+            throw new Error('Failed to fetch user data');
+        }
 
-function setTitle(user) {
-    if (user.role === 'Customer') {
-        document.title = `${user.name} - id.biz.id`;
-    } else {
-        document.title = 'id.biz.id';
+        const user = await response.json();
+        document.title = `${user.name} (${user.role})`;
+    }
+
+    catch (error) {
+        console.error("Failed to fetch", error);
     }
 }
 
-setTitle(user);
+fetchUser();
