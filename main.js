@@ -26,3 +26,5 @@ function getUser(result) {
 
     console.log(result);
 }
+
+

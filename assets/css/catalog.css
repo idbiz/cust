@@ -1,0 +1,96 @@
+/* Style umum untuk catalog */
+#catalogDesain {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    margin-top: 5%;
+}
+
+.catalog {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Menyusun kolom dengan ukuran minimum 300px */
+    gap: 20px; /* Spasi antara item grid */
+    width: 100%;
+    max-width: 1200px; /* Maksimal lebar 1200px */
+    margin: 0 auto; /* Menengahkan grid */
+}
+
+/* Style untuk kartu */
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+/* Efek hover pada kartu */
+.card:hover {
+    transform: translateY(-10px); /* Efek mengangkat saat hover */
+}
+
+.card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover; /* Agar gambar sesuai dengan area */
+}
+
+/* Style untuk body kartu */
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.card-seller {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 10px;
+    text-decoration: none;
+}
+
+.card-seller:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.card-desc {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.card-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.card-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Style tombol pesan */
+.card button:last-child {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.card button:last-child:hover {
+    background-color: #218838;
+}
