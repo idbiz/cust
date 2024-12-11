@@ -9,17 +9,28 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body>
-    <div class="nav-contaier">
+    <div class="nav-container">
         <nav>
             <div class="prof-sect">
-                <img src="" alt="" class="ppict">
-                <p id="name">Username</p>
+                <img src="./assets/images/person.jpg" alt="Profile Picture" class="ppict">
+                <p id="name" class="username">Username</p>
+                <div class="dropdown">
+                    <button class="dropbtn"><i class="ph ph-caret-down"></i></button>
+                    <div class="dropdown-content">
+                        <a href="#" id="logout-btn">Logout</a>
+                    </div>
+                </div>
             </div>
-            <ul>
+            <button class="burger-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li>
                     <div class="srch">
-                        <input type="search" name="" id="">
+                        <input type="search" name="" id="" placeholder="Search...">
                         <i class="ph ph-magnifying-glass"></i>
                     </div>
                 </li>
@@ -27,8 +38,12 @@
             </ul>
         </nav>
     </div>
+    
+    
 
-    <script type="module" src="assets/js/title.js"></script>
+    <script src="./assets/js/burger.js"></script>
+    <script src="./assets/js/dropdown.js"></script>
+    <script src="./assets/js/logout.js"></script>
     <script type="module" src="main.js"></script>
 </body>
 </html>
