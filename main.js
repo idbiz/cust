@@ -7,7 +7,7 @@ if (getCookie("login")===""){
     redirect("/login");
 }
 
-getJSON("https://asia-southeast2-awangga.cloudfunctions.net/idbiz/data/user","login",getCookie("login"),responseFunction)
+getJSON("https://asia-southeast2-awangga.cloudfunctions.net/idbiz/data/user","login",getCookie("login"),getUser,responseFunction)
 
 function responseFunction(result){
     if (result.status === 404){
@@ -20,11 +20,16 @@ function responseFunction(result){
     console.log(result);
 }
 
-function getUser(result){
-    if (result.status !== 404){
-        const name = result.data.name;
-        setInner(document.getElementById("nama"),`${name}`);
-        console.log(name);
+function getUser(result) {
+    if (result.status === 200) { // Status 200 berarti data ditemukan
+        const name = result.data.name || "Guest"; // Default jika name tidak ditemukan
+        setInner("name", name); // Menggunakan ID 'name' sesuai struktur HTML
+        console.log(`Nama pengguna: ${name}`);
+    } else if (result.status === 404) {
+        console.warn("Data pengguna tidak ditemukan.");
+        setInner("name", "Guest"); // Menampilkan nama default
+    } else {
+        console.error("Terjadi kesalahan saat mengambil data pengguna.");
     }
 
     console.log(result);
