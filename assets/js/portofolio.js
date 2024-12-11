@@ -2,10 +2,12 @@
 async function fetchPortofolio() {
     try {
         const response = await fetch("https://asia-southeast2-awangga.cloudfunctions.net/idbiz/portofolio");
-        const data = await response.json(); // Mengambil data JSON dari API
+        const data = await response.json();
         
+        console.log(data); // Menampilkan data untuk memeriksa format
+
         if (response.ok) {
-            renderPortofolio(data); // Jika berhasil, render data ke dalam kartu
+            renderPortofolio(data); // Jika data dalam format yang benar, lanjutkan merender
         } else {
             console.error("Gagal memuat data portofolio:", data);
         }
@@ -14,64 +16,73 @@ async function fetchPortofolio() {
     }
 }
 
+
 // Fungsi untuk merender data portofolio ke dalam elemen kartu
-function renderPortofolio(portofolioData) {
+function renderPortofolio(data) {
     const catalogContainer = document.getElementById("catalogDesain");
-    
-    // Loop melalui setiap item portofolio dan membuat elemen kartu
-    portofolioData.forEach(item => {
-        const card = document.createElement("div");
-        card.classList.add("card");
 
-        // Gambar desain
-        const img = document.createElement("img");
-        img.classList.add("card-img");
-        img.src = `./assets/images/${item.design_image}`; // Pastikan gambar ada di folder assets/images
-        img.alt = item.design_title;
+    // Periksa apakah data adalah array atau objek
+    const portofolioData = Array.isArray(data) ? data : data.portofolio; // Menyesuaikan jika data berada di dalam objek portofolio
 
-        // Body kartu
-        const cardBody = document.createElement("div");
-        cardBody.classList.add("card-body");
+    // Pastikan portofolioData adalah array
+    if (Array.isArray(portofolioData)) {
+        portofolioData.forEach(item => {
+            const card = document.createElement("div");
+            card.classList.add("card");
 
-        // Judul desain
-        const title = document.createElement("h3");
-        title.classList.add("card-title");
-        title.textContent = item.design_title;
+            // Gambar desain - menggunakan URL gambar dari API
+            const img = document.createElement("img");
+            img.classList.add("card-img");
+            img.src = item.design_image; // Misalkan API menyediakan URL gambar lengkap
+            img.alt = item.design_title;
 
-        // Nama seller (harus mengambil data seller dari portofolio jika ada)
-        const seller = document.createElement("a");
-        seller.classList.add("card-seller");
-        seller.href = "#"; // Tambahkan link ke halaman seller jika tersedia
-        seller.textContent = "Nama Seller"; // Anda bisa menambahkan data seller di sini jika tersedia
+            // Body kartu
+            const cardBody = document.createElement("div");
+            cardBody.classList.add("card-body");
 
-        // Deskripsi desain
-        const desc = document.createElement("p");
-        desc.classList.add("card-desc");
-        desc.textContent = item.design_desc;
+            // Judul desain
+            const title = document.createElement("h3");
+            title.classList.add("card-title");
+            title.textContent = item.design_title;
 
-        // Tombol Detail
-        const detailBtn = document.createElement("button");
-        detailBtn.classList.add("card-btn");
-        detailBtn.textContent = "Detail";
+            // Nama seller (harus mengambil data seller dari portofolio jika ada)
+            const seller = document.createElement("a");
+            seller.classList.add("card-seller");
+            seller.href = "#"; // Tambahkan link ke halaman seller jika tersedia
+            seller.textContent = "Nama Seller"; // Anda bisa menambahkan data seller di sini jika tersedia
 
-        // Tombol Pesan
-        const pesanBtn = document.createElement("button");
-        pesanBtn.textContent = "Pesan";
+            // Deskripsi desain
+            const desc = document.createElement("p");
+            desc.classList.add("card-desc");
+            desc.textContent = item.design_desc;
 
-        // Menambahkan elemen ke dalam kartu
-        cardBody.appendChild(title);
-        cardBody.appendChild(seller);
-        cardBody.appendChild(desc);
-        cardBody.appendChild(detailBtn);
-        cardBody.appendChild(pesanBtn);
+            // Tombol Detail
+            const detailBtn = document.createElement("button");
+            detailBtn.classList.add("card-btn");
+            detailBtn.textContent = "Detail";
 
-        card.appendChild(img);
-        card.appendChild(cardBody);
+            // Tombol Pesan
+            const pesanBtn = document.createElement("button");
+            pesanBtn.textContent = "Pesan";
 
-        // Menambahkan kartu ke dalam container katalog
-        catalogContainer.appendChild(card);
-    });
+            // Menambahkan elemen ke dalam kartu
+            cardBody.appendChild(title);
+            cardBody.appendChild(seller);
+            cardBody.appendChild(desc);
+            cardBody.appendChild(detailBtn);
+            cardBody.appendChild(pesanBtn);
+
+            card.appendChild(img);
+            card.appendChild(cardBody);
+
+            // Menambahkan kartu ke dalam container katalog
+            catalogContainer.appendChild(card);
+        });
+    } else {
+        console.error("Data portofolio tidak ditemukan atau tidak dalam format array.");
+    }
 }
+
 
 // Memanggil fungsi untuk mengambil data portofolio saat halaman dimuat
 document.addEventListener("DOMContentLoaded", fetchPortofolio);
