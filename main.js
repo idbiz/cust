@@ -16,6 +16,7 @@ function getUser(result) {
         const name = result.data.name || "Guest"; // Default jika name tidak ditemukan
         setInner("name", name); // Menggunakan ID 'name' sesuai struktur HTML
         updateTitle(name); // Mengubah judul halaman
+        console.log(`${name} berhasil masuk.`);
     } else if (result.status === 404) {
         console.warn("Data pengguna tidak ditemukan.");
         setInner("name", "Guest"); // Menampilkan nama default
