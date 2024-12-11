@@ -19,3 +19,10 @@ function responseFunction(result){
     }
     console.log(result);
 }
+
+function getUser(result){
+    if (result.status !== 404){
+        const name = result.data.name;
+        setInner(document.getElementById("nama"),`${name}`);
+    }
+}
