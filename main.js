@@ -3,7 +3,7 @@ import {setInner} from "https://cdn.jsdelivr.net/gh/jscroot/element@0.1.5/croot.
 import {getJSON} from "https://cdn.jsdelivr.net/gh/jscroot/api@0.0.7/croot.js";
 import {redirect} from "https://cdn.jsdelivr.net/gh/jscroot/url@0.0.9/croot.js";
 
-import { updateTitle } from "./assets/js/title";
+import { updateTitle } from "./assets/js/title.js";
 
 if (getCookie("login")===""){
     redirect("/login");
