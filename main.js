@@ -7,7 +7,7 @@ if (getCookie("login")===""){
     redirect("/login");
 }
 
-getJSON("https://api.do.my.id/data/user","login",getCookie("login"),responseFunction)
+getJSON("https://asia-southeast2-awangga.cloudfunctions.net/idbiz/data/user","login",getCookie("login"),responseFunction)
 
 function responseFunction(result){
     if (result.status === 404){
@@ -24,5 +24,8 @@ function getUser(result){
     if (result.status !== 404){
         const name = result.data.name;
         setInner(document.getElementById("nama"),`${name}`);
+        console.log(name);
     }
+
+    console.log(result);
 }
