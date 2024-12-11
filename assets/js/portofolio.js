@@ -61,6 +61,10 @@ function renderPortofolio(portofolioData) {
             // Tombol Pesan
             const pesanBtn = document.createElement("button");
             pesanBtn.textContent = "Pesan";
+            // arahkan ke halaman id.biz.id/form-pemesanan
+            pesanBtn.addEventListener("click", () => {
+                window.location.href = "https://id.biz.id/form-pemesanan";
+            });
 
             // Menambahkan elemen ke dalam kartu
             cardBody.appendChild(title);
