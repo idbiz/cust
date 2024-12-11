@@ -24,7 +24,7 @@ function getUser(result) {
         console.error("Terjadi kesalahan saat mengambil data pengguna.");
     }
 
-    console.log(result);
+    // console.log(result);
 }
 
 

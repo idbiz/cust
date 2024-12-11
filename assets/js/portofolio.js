@@ -7,7 +7,7 @@ async function fetchPortofolio() {
         console.log(data); // Menampilkan data untuk memeriksa format
 
         if (response.ok) {
-            renderPortofolio(data); // Jika data dalam format yang benar, lanjutkan merender
+            renderPortofolio(data.data); // Mengakses data yang berada dalam data.data
         } else {
             console.error("Gagal memuat data portofolio:", data);
         }
@@ -18,11 +18,8 @@ async function fetchPortofolio() {
 
 
 // Fungsi untuk merender data portofolio ke dalam elemen kartu
-function renderPortofolio(data) {
+function renderPortofolio(portofolioData) {
     const catalogContainer = document.getElementById("catalogDesain");
-
-    // Periksa apakah data adalah array atau objek
-    const portofolioData = Array.isArray(data) ? data : data.portofolio; // Menyesuaikan jika data berada di dalam objek portofolio
 
     // Pastikan portofolioData adalah array
     if (Array.isArray(portofolioData)) {
@@ -33,7 +30,7 @@ function renderPortofolio(data) {
             // Gambar desain - menggunakan URL gambar dari API
             const img = document.createElement("img");
             img.classList.add("card-img");
-            img.src = item.design_image; // Misalkan API menyediakan URL gambar lengkap
+            img.src = item.design_image; // Menggunakan URL gambar dari API
             img.alt = item.design_title;
 
             // Body kartu
@@ -82,7 +79,6 @@ function renderPortofolio(data) {
         console.error("Data portofolio tidak ditemukan atau tidak dalam format array.");
     }
 }
-
 
 // Memanggil fungsi untuk mengambil data portofolio saat halaman dimuat
 document.addEventListener("DOMContentLoaded", fetchPortofolio);
