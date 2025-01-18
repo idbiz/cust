@@ -1,99 +1,94 @@
-// Fungsi untuk mengambil data portofolio
+import { getCookie } from "https://cdn.jsdelivr.net/gh/jscroot/cookie@0.0.1/croot.js";
+import { redirect } from "https://cdn.jsdelivr.net/gh/jscroot/url@0.0.9/croot.js";
+
 async function fetchPortofolio() {
+    // Ambil token dari cookie
+    const token = getCookie("login");
+
+    // Redirect jika token tidak ditemukan
+    if (!token) {
+        redirect("/login");
+        return; // Berhenti eksekusi lebih lanjut jika token tidak ada
+    }
+
+    const endpoint = "http://localhost:8080/portofolio";
+
     try {
-        const response = await fetch("https://asia-southeast2-awangga.cloudfunctions.net/idbiz/portofolio");
-        const data = await response.json();
-
-        console.log(data); // Menampilkan data untuk memeriksa format
-
-        if (response.ok) {
-            renderPortofolio(data.data); // Mengakses data yang berada dalam data.data
-        } else {
-            console.error("Gagal memuat data portofolio:", data);
-        }
-    } catch (error) {
-        console.error("Terjadi kesalahan saat mengambil data:", error);
-    }
-}
-
-// Fungsi untuk membatasi teks yang terlalu panjang
-function truncateText(text, maxLength) {
-    return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
-}
-
-// Fungsi untuk merender data portofolio ke dalam elemen kartu
-function renderPortofolio(portofolioData) {
-    const catalogContainer = document.getElementById("catalogDesain");
-
-    // Pastikan portofolioData adalah array
-    if (Array.isArray(portofolioData)) {
-        portofolioData.forEach(item => {
-            const card = document.createElement("div");
-            card.classList.add("card");
-
-            // Gambar desain - menggunakan URL gambar dari API
-            const img = document.createElement("img");
-            img.classList.add("card-img");
-            img.src = item.design_image; // Menggunakan URL gambar dari API
-            img.alt = item.design_title;
-
-            // Body kartu
-            const cardBody = document.createElement("div");
-            cardBody.classList.add("card-body");
-
-            // Judul desain
-            const title = document.createElement("h3");
-            title.classList.add("card-title");
-            title.textContent = truncateText(item.design_title, 20);
-
-            // Nama seller (harus mengambil data seller dari portofolio jika ada)
-            const seller = document.createElement("a");
-            seller.classList.add("card-seller");
-            seller.href = "#"; // Tambahkan link ke halaman seller jika tersedia
-            // seller.textContent = item.name; // Anda bisa menambahkan data seller di sini jika tersedia
-            seller.textContent = "Seller"; // Anda bisa menambahkan data seller di sini jika tersedia
-
-            // Deskripsi desain
-            const desc = document.createElement("p");
-            desc.classList.add("card-desc");
-            desc.textContent = truncateText(item.design_desc, 40);
-
-            // Tombol Detail
-            const detailBtn = document.createElement("button");
-            detailBtn.classList.add("card-btn");
-            detailBtn.textContent = "Detail";
-
-            // Tombol Pesan
-            const pesanBtn = document.createElement("button");
-            pesanBtn.classList.add("card-pesan");
-            pesanBtn.textContent = "Pesan";
-            // arahkan ke halaman id.biz.id/form-pemesanan
-            pesanBtn.addEventListener("click", () => {
-                window.location.href = "https://id.biz.id/form-pemesanan";
-            });
-
-            // Bagian tombol
-            const cardActions = document.createElement("div");
-            cardActions.classList.add("card-actions");
-            cardActions.appendChild(detailBtn);
-            cardActions.appendChild(pesanBtn);
-
-            // Menambahkan elemen ke dalam kartu
-            cardBody.appendChild(title);
-            cardBody.appendChild(seller);
-            cardBody.appendChild(desc);
-            cardBody.appendChild(cardActions);
-
-            card.appendChild(img);
-            card.appendChild(cardBody);
-
-            // Menambahkan kartu ke dalam container katalog
-            catalogContainer.appendChild(card);
+        const response = await fetch(endpoint, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "login": `${token}`
+            }
         });
-    } else {
-        console.error("Data portofolio tidak ditemukan atau tidak dalam format array.");
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        displayPortofolio(data);
+    } catch (error) {
+        console.error("Error fetching portofolio:", error);
     }
 }
 
-// Memanggil fungsi untuk mengambil data portofolio saat halaman dimuat
-document.addEventListener("DOMContentLoaded", fetchPortofolio);
+function formatRupiah(angka) {
+    return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR'
+    }).format(angka);
+}
+
+function displayPortofolio(portofolio) {
+    const cardsContainer = document.getElementById('cards-container');
+    cardsContainer.innerHTML = ''; // Kosongkan kontainer jika ada data sebelumnya
+
+    portofolio.forEach(item => {
+        const card = document.createElement('div');
+        card.className = "bg-white rounded-lg shadow-lg overflow-hidden";
+        card.innerHTML = `
+            <img src="../assets/images/${item.gambar}" alt="${item.nama_desain}" class="w-full h-48 object-cover cursor-pointer" onclick="openModal('../assets/images/${item.gambar}')">
+            <div class="p-4">
+                <h2 class="text-xl font-semibold">${item.nama_desain}</h2>
+                <p class="text-gray-600 mt-2">${item.deskripsi}</p>
+                <p class="text-lg font-bold mt-4">Harga: ${formatRupiah(item.harga)}</p>
+                <p class="text-sm text-gray-500 mt-2">Kategori: ${item.kategori}</p>
+                <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none" onclick="handleMessage('${item.nama_desain}')">
+                    Pesan Desain
+                </button>
+            </div>
+        `;
+        cardsContainer.appendChild(card);
+    });
+}
+
+function handleMessage(desain) {
+    alert(`Anda mengirim pesan untuk desain: ${desain}`);
+}
+
+// Function to open modal with fullscreen image
+function openModal(imageSrc) {
+    const modal = document.getElementById("image-modal");
+    const modalImage = document.getElementById("modal-image");
+    modalImage.src = imageSrc;
+    modal.classList.remove("hidden"); // Tampilkan modal
+}
+
+// Function to close modal
+function closeModal() {
+    const modal = document.getElementById("image-modal");
+    modal.classList.add("hidden"); // Sembunyikan modal
+}
+
+// Menambahkan event listener untuk menutup modal saat mengklik area gelap
+document.getElementById("image-modal").addEventListener("click", function(e) {
+    if (e.target === this) {
+        closeModal();
+    }
+});
+
+// Panggil fungsi fetch setelah halaman dimuat
+document.addEventListener("DOMContentLoaded", function() {
+    fetchPortofolio();
+});

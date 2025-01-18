@@ -31,7 +31,7 @@
                 <span></span>
             </button>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html">Catalog</a></li>
                 <li>
                     <div class="srch">
                         <input type="search" name="" id="" placeholder="Search...">
@@ -43,10 +43,23 @@
         </nav>
     </div>
     
-    <div id="catalogDesain">
-
-    </div>
-
+    <div id="portofolio" class="container mx-auto p-4">
+      <h1 class="text-3xl font-bold text-center mb-8">Portofolio Desain</h1>
+      <div id="cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Data card akan ditambahkan di sini oleh JS -->
+      </div>
+    </div> 
+    
+    <!-- Modal untuk melihat gambar secara fullscreen -->
+    <div id="image-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+      <div class="relative">
+        <img id="modal-image" src="" alt="Image" class="max-w-full max-h-full object-contain" />
+        <button id="close-modal" class="absolute top-2 right-2 bg-white text-black p-2 rounded-full hover:bg-gray-300" onclick="closeModal()">
+            &times;
+        </button>
+      </div>
+    </div>    
+    
     <!-- ## FOOTER ## -->
     <footer class="bg-gray-900 text-white py-8">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 px-4 lg:px-24">
@@ -135,7 +148,7 @@
     
     <script src="./assets/js/burger.js"></script>
     <script src="./assets/js/logout.js"></script>
-    <script src="./assets/js/portofolio.js"></script>
+    <script type="module" src="./assets/js/portofolio.js"></script>
     <script type="module" src="main.js"></script>
 </body>
 </html>

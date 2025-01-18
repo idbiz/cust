@@ -9,7 +9,8 @@ if (getCookie("login")===""){
     redirect("/login");
 }
 
-getJSON("https://asia-southeast2-awangga.cloudfunctions.net/idbiz/data/user","login",getCookie("login"),getUser)
+// getJSON("https://asia-southeast2-awangga.cloudfunctions.net/idbiz/data/user","login",getCookie("login"),getUser)
+getJSON("http://localhost:8080/data/user","login",getCookie("login"),getUser)
 
 function getUser(result) {
     if (result.status === 200) { // Status 200 berarti data ditemukan
