@@ -2,13 +2,33 @@ document.addEventListener("DOMContentLoaded", () => {
     const logoutBtn = document.getElementById("logout-btn");
 
     logoutBtn.addEventListener("click", () => {
-        // Hapus token atau data login dari localStorage/sessionStorage (jika digunakan)
-        localStorage.removeItem("login");  // Sesuaikan dengan nama token yang Anda simpan
+        const token = localStorage.getItem("login") || sessionStorage.getItem("login");
 
-        // Atau Anda bisa menggunakan sessionStorage:
-        sessionStorage.removeItem("login");
+        // Kirim permintaan logout ke server
+        fetch("https://asia-southeast2-awangga.cloudfunctions.net/idbiz/auth/logout", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "login": token, // Header yang berisi token
+            },
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                // Berhasil logout, hapus token dari storage
+                localStorage.removeItem("login");
+                sessionStorage.removeItem("login");
 
-        // Redirect ke halaman login atau beranda
-        window.location.href = "/"; // Ganti dengan halaman login yang sesuai
+                // Arahkan ke halaman login
+                window.location.href = "/login";
+            })
+            .catch((error) => {
+                console.error("Error during logout:", error);
+                alert("Terjadi kesalahan saat logout. Silakan coba lagi.");
+            });
     });
 });

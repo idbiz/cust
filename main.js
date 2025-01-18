@@ -9,8 +9,8 @@ if (getCookie("login")===""){
     redirect("/login");
 }
 
-// getJSON("https://asia-southeast2-awangga.cloudfunctions.net/idbiz/data/user","login",getCookie("login"),getUser)
-getJSON("http://localhost:8080/data/user","login",getCookie("login"),getUser)
+getJSON("https://asia-southeast2-awangga.cloudfunctions.net/idbiz/data/user","login",getCookie("login"),getUser)
+// getJSON("http://localhost:8080/data/user","login",getCookie("login"),getUser)
 
 function getUser(result) {
     if (result.status === 200) { // Status 200 berarti data ditemukan
@@ -18,6 +18,8 @@ function getUser(result) {
         setInner("name", name); // Menggunakan ID 'name' sesuai struktur HTML
         updateTitle(name); // Mengubah judul halaman
         // console.log(`${name} berhasil masuk.`);
+
+        localStorage.setItem("namaPemesan", name);
     } else if (result.status === 404) {
         console.warn("Data pengguna tidak ditemukan.");
         setInner("name", "Guest"); // Menampilkan nama default

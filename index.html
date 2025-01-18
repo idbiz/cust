@@ -43,22 +43,41 @@
         </nav>
     </div>
     
-    <div id="portofolio" class="container mx-auto p-4">
-      <h1 class="text-3xl font-bold text-center mb-8">Portofolio Desain</h1>
-      <div id="cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!-- Data card akan ditambahkan di sini oleh JS -->
-      </div>
-    </div> 
-    
-    <!-- Modal untuk melihat gambar secara fullscreen -->
-    <div id="image-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
-      <div class="relative">
-        <img id="modal-image" src="" alt="Image" class="max-w-full max-h-full object-contain" />
-        <button id="close-modal" class="absolute top-2 right-2 bg-white text-black p-2 rounded-full hover:bg-gray-300" onclick="closeModal()">
-            &times;
-        </button>
-      </div>
-    </div>    
+
+    <!-- Container untuk kartu desain -->
+    <div id="cards-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+        <!-- Kartu desain akan muncul di sini -->
+    </div>
+
+    <!-- Modal Gambar -->
+    <div id="image-modal" class="fixed inset-0 bg-gray-800 bg-opacity-75 hidden flex items-center justify-center z-50">
+        <img id="modal-image" src="" alt="Gambar Modal" class="max-w-full max-h-full p-4 cursor-pointer" onclick="closeModal()">
+    </div>
+
+    <!-- Modal Form Pesanan -->
+    <div id="order-modal" class="fixed inset-0 bg-gray-800 bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h2 class="text-2xl font-semibold mb-4">Form Pesanan</h2>
+            <form id="order-form">
+                <div class="mb-4">
+                    <label for="namaPemesan" class="block text-gray-700">Nama Pemesan</label>
+                    <input type="text" id="namaPemesan" name="namaPemesan" class="w-full px-4 py-2 border border-gray-300 rounded-md" required>
+                </div>
+                <div class="mb-4">
+                    <label for="catatan" class="block text-gray-700">Catatan Pesanan</label>
+                    <textarea id="catatan" name="catatan" class="w-full px-4 py-2 border border-gray-300 rounded-md"></textarea>
+                </div>
+                <div class="mb-4">
+                    <label for="pembayaran" class="block text-gray-700">Metode Pembayaran</label>
+                    <select id="pembayaran" name="pembayaran" class="w-full px-4 py-2 border border-gray-300 rounded-md">
+                        <option value="Transfer">Transfer</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">Pesan</button>
+            </form>
+            <button onclick="closeOrderModal()" class="mt-4 text-red-500 hover:text-red-700">Tutup</button>
+        </div>
+    </div>
     
     <!-- ## FOOTER ## -->
     <footer class="bg-gray-900 text-white py-8">
@@ -146,9 +165,16 @@
         </div>
       </footer>
     
-    <script src="./assets/js/burger.js"></script>
-    <script src="./assets/js/logout.js"></script>
-    <script type="module" src="./assets/js/portofolio.js"></script>
-    <script type="module" src="main.js"></script>
+      
+      
+      <!-- Import module -->
+      <script type="module" src="main.js"></script>
+
+      <!-- // Non module script -->
+      <script src="./assets/js/burger.js"></script>
+      <script src="./assets/js/logout.js"></script>
+
+      <script src="./assets/js/portofolio.js"></script>
+
 </body>
 </html>
