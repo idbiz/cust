@@ -51,7 +51,7 @@ function displayPortofolio(portofolio) {
         const card = document.createElement('div');
         card.className = "bg-white rounded-lg shadow-lg overflow-hidden";
         card.innerHTML = `
-            <img src="./assets/images/${item.gambar}" alt="${item.nama_desain}" class="w-full h-48 object-cover cursor-pointer" onclick="openModal('./assets/images/${item.gambar}')">
+            <img src="./cust/assets/images/${item.gambar}" alt="${item.nama_desain}" class="w-full h-48 object-cover cursor-pointer" onclick="openModal('./cust/assets/images/${item.gambar}')">
             <div class="p-4">
                 <h2 class="text-xl font-semibold">${item.nama_desain}</h2>
                 <p class="text-gray-600 mt-2">${item.deskripsi}</p>
