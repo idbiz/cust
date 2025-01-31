@@ -6,7 +6,7 @@ import {redirect} from "https://cdn.jsdelivr.net/gh/jscroot/url@0.0.9/croot.js";
 import { updateTitle } from "./assets/js/title.js";
 
 if (getCookie("login")===""){
-    redirect("/login");
+    redirect("/LoginPage");
 }
 
 getJSON("https://asia-southeast2-awangga.cloudfunctions.net/idbiz/data/user","login",getCookie("login"),getUser)
