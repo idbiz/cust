@@ -1,15 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
     const logoutBtn = document.getElementById("logout-btn");
 
-    logoutBtn.addEventListener("click", () => {
-        const token = localStorage.getItem("login") || sessionStorage.getItem("login");
+    if (!logoutBtn) {
+        console.error("Logout button not found.");
+        return;
+    }
 
-        // Kirim permintaan logout ke server
+    logoutBtn.addEventListener("click", () => {
+        // Ensure the request includes credentials (cookies)
         fetch("https://asia-southeast2-awangga.cloudfunctions.net/idbiz/auth/logout", {
             method: "POST",
+            credentials: "include", // Ensures cookies are sent with the request
             headers: {
                 "Content-Type": "application/json",
-                "login": token, // Header yang berisi token
             },
         })
             .then((response) => {
@@ -18,13 +21,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
                 return response.json();
             })
-            .then((data) => {
-                // Berhasil logout, hapus token dari storage
+            .then(() => {
+                // Remove token from storage
                 localStorage.removeItem("login");
                 sessionStorage.removeItem("login");
 
-                // Arahkan ke halaman login
-                window.location.href = "/login";
+                // Redirect to login page
+                window.location.href = "/LoginPage";
             })
             .catch((error) => {
                 console.error("Error during logout:", error);
