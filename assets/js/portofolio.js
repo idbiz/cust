@@ -12,7 +12,7 @@ function getCookie(name) {
 async function fetchPortofolio() {
     const token = getCookie("login");
     if (!token) {
-        redirect("/login");
+        redirect("/LoginPage");
         return;
     }
 
