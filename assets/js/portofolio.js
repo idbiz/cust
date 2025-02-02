@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function () {
+    const searchInput = document.getElementById("searchInput");
     const cardsContainer = document.getElementById("cards-container");
     const imageModal = document.getElementById("image-modal");
     const modalImage = document.getElementById("modal-image");
@@ -10,6 +11,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     const hargaInput = document.getElementById("harga");
     const catatanInput = document.getElementById("catatan_pesanan");
     const buktiPembayaranInput = document.getElementById("bukti_pembayaran");
+
+    let allPortfolios = [];
 
     function getToken() {
         const tokenMatch = document.cookie.match(/(^| )login=([^;]+)/);
@@ -66,8 +69,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                 throw new Error("Failed to fetch portfolios");
             }
 
-            const portfolios = await response.json();
-            renderPortfolioCards(portfolios);
+            allPortfolios = await response.json();
+            renderPortfolioCards(allPortfolios);
         } catch (error) {
             console.error("Error fetching portfolio data:", error);
         }
@@ -80,7 +83,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             card.className = "bg-white shadow-md rounded-lg p-4 flex flex-col cursor-pointer";
 
             card.innerHTML = `
-                <img src="/assets/images/${portfolio.gambar}" alt="${portfolio.nama_desain}" class="w-full h-48 object-cover rounded-lg mb-4" onclick="openModal('/assets/images/${portfolio.gambar}')">
+                <img src="cust/assets/images/${portfolio.gambar}" alt="${portfolio.nama_desain}" class="w-full h-48 object-cover rounded-lg mb-4" onclick="openModal('/assets/images/${portfolio.gambar}')">
                 <h3 class="text-lg font-semibold">${portfolio.nama_desain}</h3>
                 <p class="text-gray-600 text-sm">${portfolio.deskripsi}</p>
                 <p class="text-blue-500 font-bold mt-2">Rp ${parseInt(portfolio.harga).toLocaleString()}</p>
@@ -90,6 +93,17 @@ document.addEventListener("DOMContentLoaded", async function () {
             cardsContainer.appendChild(card);
         });
     }
+
+    // 🔍 Fungsi pencarian nama desain
+    function searchPortfolios() {
+        const searchText = searchInput.value.trim().toLowerCase();
+        const filteredPortfolios = allPortfolios.filter(portfolio =>
+            portfolio.nama_desain.toLowerCase().includes(searchText)
+        );
+        renderPortfolioCards(filteredPortfolios);
+    }
+
+    searchInput.addEventListener("input", searchPortfolios);
 
     window.openModal = function (imageUrl) {
         modalImage.src = imageUrl;
@@ -174,7 +188,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             return;
         }
 
-        const formData = new FormData();
+        const formData = new FormData(orderForm);
         formData.append("user_id", userId);
         formData.append("nama_pemesan", namaPemesan);
         formData.append("desain_id", desainInput.value);
@@ -183,6 +197,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         formData.append("status_pesanan", "Pending");
         formData.append("catatan_pesanan", catatanInput.value);
         formData.append("bukti_pembayaran", buktiPembayaranInput.files[0]);
+        formData.append("status_pesanan", "Pending");
 
         try {
             const response = await fetch("https://asia-southeast2-awangga.cloudfunctions.net/idbiz/insert/pembayaran", {
