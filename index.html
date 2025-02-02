@@ -54,29 +54,44 @@
         <img id="modal-image" src="" alt="Gambar Modal" class="max-w-full max-h-full p-4 cursor-pointer" onclick="closeModal()">
     </div>
 
-    <!-- Modal Form Pesanan -->
-    <div id="order-modal" class="fixed inset-0 bg-gray-800 bg-opacity-50 hidden flex items-center justify-center z-50">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h2 class="text-2xl font-semibold mb-4">Form Pesanan</h2>
-            <form id="order-form">
-                <div class="mb-4">
-                    <label for="namaPemesan" class="block text-gray-700">Nama Pemesan</label>
-                    <input type="text" id="namaPemesan" name="namaPemesan" class="w-full px-4 py-2 border border-gray-300 rounded-md" required>
-                </div>
-                <div class="mb-4">
-                    <label for="catatan" class="block text-gray-700">Catatan Pesanan</label>
-                    <textarea id="catatan" name="catatan" class="w-full px-4 py-2 border border-gray-300 rounded-md"></textarea>
-                </div>
-                <div class="mb-4">
-                    <label for="pembayaran" class="block text-gray-700">Metode Pembayaran</label>
-                    <select id="pembayaran" name="pembayaran" class="w-full px-4 py-2 border border-gray-300 rounded-md">
-                        <option value="Transfer">Transfer</option>
-                    </select>
-                </div>
-                <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">Pesan</button>
-            </form>
-            <button onclick="closeOrderModal()" class="mt-4 text-red-500 hover:text-red-700">Tutup</button>
-        </div>
+    <!-- Modal Order -->
+    <div id="order-modal" class="fixed inset-0 bg-gray-800 bg-opacity-75 hidden flex items-center justify-center z-50">
+      <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full relative">
+          <h2 class="text-xl font-bold mb-4 text-center">Buat Pesanan</h2>
+          <form id="order-form" class="flex flex-col">
+              <input type="hidden" id="desain_id">
+
+              <label class="font-semibold">Nama Pemesan</label>
+              <input type="text" id="nama_pemesan" class="border p-2 w-full mb-2 bg-gray-100" readonly>
+
+              <label class="font-semibold">Nama Desain</label>
+              <input type="text" id="nama_desain" class="border p-2 w-full mb-2 bg-gray-100" readonly>
+
+              <label class="font-semibold">Harga</label>
+              <input type="text" id="harga" class="border p-2 w-full mb-2 bg-gray-100" readonly>
+
+              <!-- 🔥 Informasi Nomor Rekening Tujuan -->
+              <div class="bg-gray-200 p-4 rounded-md mb-4">
+                  <p class="font-semibold text-gray-700">Transfer ke rekening berikut:</p>
+                  <p class="text-lg font-bold text-blue-600" id="nomor_rekening">-</p>
+              </div>
+
+              <label class="font-semibold">Catatan</label>
+              <textarea id="catatan_pesanan" class="border p-2 w-full mb-2" placeholder="Tambahkan catatan pesanan..."></textarea>
+
+              <label class="font-semibold">Bukti Pembayaran</label>
+              <input type="file" id="bukti_pembayaran" class="border p-2 w-full mb-2">
+
+              <div class="flex justify-between mt-4">
+                  <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md w-full mr-2 hover:bg-green-700">
+                      Kirim Pesanan
+                  </button>
+                  <button type="button" id="close-modal" class="bg-red-500 text-white px-4 py-2 rounded-md w-full ml-2 hover:bg-red-700">
+                      Batal
+                  </button>
+              </div>
+          </form>
+      </div>
     </div>
     
     <!-- ## FOOTER ## -->
@@ -166,7 +181,8 @@
       </footer>
     
       
-      
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
       <!-- Import module -->
       <script type="module" src="main.js"></script>
 
