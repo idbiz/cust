@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             card.className = "bg-white shadow-md rounded-lg p-4 flex flex-col cursor-pointer";
 
             card.innerHTML = `
-                <img src="cust/assets/images/${portfolio.gambar}" alt="${portfolio.nama_desain}" class="w-full h-48 object-cover rounded-lg mb-4" onclick="openModal('/assets/images/${portfolio.gambar}')">
+                <img src="assets/images/${portfolio.gambar}" alt="${portfolio.nama_desain}" class="w-full h-48 object-cover rounded-lg mb-4" onclick="openModal('/assets/images/${portfolio.gambar}')">
                 <h3 class="text-lg font-semibold">${portfolio.nama_desain}</h3>
                 <p class="text-gray-600 text-sm">${portfolio.deskripsi}</p>
                 <p class="text-blue-500 font-bold mt-2">Rp ${parseInt(portfolio.harga).toLocaleString()}</p>
