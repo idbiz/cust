@@ -44,55 +44,51 @@
     </div>
     
 
-    <!-- Container untuk kartu desain -->
-    <div id="cards-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-24">
-      <!-- Kartu desain akan muncul di sini -->
+    <!-- Container untuk histori transaksi yang masih berjalan -->
+    <div class="p-6 my-12 mx-12">
+        <h2 class="text-2xl font-bold mb-4">Riwayat Transaksi</h2>
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white border border-gray-300">
+                <thead>
+                    <tr class="bg-gray-200 border">
+                        <th class="py-2 px-4 border">Tanggal</th>
+                        <th class="py-2 px-4 border">Nama Desain</th>
+                        <th class="py-2 px-4 border">Harga</th>
+                        <th class="py-2 px-4 border">Catatan</th>
+                        <th class="py-2 px-4 border">Bukti Pembayaran</th>
+                        <th class="py-2 px-4 border">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="historyTableBody">
+                    <!-- Data akan dimasukkan secara dinamis -->
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <!-- Modal Gambar -->
-    <div id="image-modal" class="fixed inset-0 bg-gray-800 bg-opacity-75 hidden flex items-center justify-center z-50">
-        <img id="modal-image" src="" alt="Gambar Modal" class="max-w-full max-h-full p-4 cursor-pointer" onclick="closeModal()">
+    <!-- Container untuk histori transaksi yang sudah selesai -->
+    <div class="p-6 my-12 mx-12">
+        <h2 class="text-2xl font-bold mb-4">Riwayat Transaksi Selesai</h2>
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white border border-gray-300">
+                <thead>
+                    <tr class="bg-gray-200 border">
+                        <th class="py-2 px-4 border">Tanggal</th>
+                        <th class="py-2 px-4 border">Nama Desain</th>
+                        <th class="py-2 px-4 border">Harga</th>
+                        <th class="py-2 px-4 border">Catatan</th>
+                        <th class="py-2 px-4 border">Bukti Pembayaran</th>
+                        <th class="py-2 px-4 border">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="doneHistoryTableBody">
+                    <!-- Data transaksi selesai akan dimasukkan secara dinamis -->
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <!-- Modal Order -->
-    <div id="order-modal" class="fixed inset-0 bg-gray-800 bg-opacity-75 hidden flex items-center justify-center z-50">
-      <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full relative">
-          <h2 class="text-xl font-bold mb-4 text-center">Buat Pesanan</h2>
-          <form id="order-form" class="flex flex-col">
-              <input type="hidden" id="desain_id">
-
-              <label class="font-semibold">Nama Pemesan</label>
-              <input type="text" id="nama_pemesan" class="border p-2 w-full mb-2 bg-gray-100" readonly>
-
-              <label class="font-semibold">Nama Desain</label>
-              <input type="text" id="nama_desain" class="border p-2 w-full mb-2 bg-gray-100" readonly>
-
-              <label class="font-semibold">Harga</label>
-              <input type="text" id="harga" class="border p-2 w-full mb-2 bg-gray-100" readonly>
-
-              <!-- 🔥 Informasi Nomor Rekening Tujuan -->
-              <div class="bg-gray-200 p-4 rounded-md mb-4">
-                  <p class="font-semibold text-gray-700">Transfer ke rekening berikut:</p>
-                  <p class="text-lg font-bold text-blue-600" id="nomor_rekening">-</p>
-              </div>
-
-              <label class="font-semibold">Catatan</label>
-              <textarea id="catatan_pesanan" class="border p-2 w-full mb-2" placeholder="Tambahkan catatan pesanan..."></textarea>
-
-              <label class="font-semibold">Bukti Pembayaran</label>
-              <input type="file" id="bukti_pembayaran" class="border p-2 w-full mb-2">
-
-              <div class="flex justify-between mt-4">
-                  <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md w-full mr-2 hover:bg-green-700">
-                      Kirim Pesanan
-                  </button>
-                  <button type="button" id="close-modal" class="bg-red-500 text-white px-4 py-2 rounded-md w-full ml-2 hover:bg-red-700">
-                      Batal
-                  </button>
-              </div>
-          </form>
-      </div>
-    </div>
+    
     
     <!-- ## FOOTER ## -->
     <footer class="bg-gray-900 text-white py-8">
@@ -190,7 +186,7 @@
       <script src="./assets/js/burger.js"></script>
       <script src="./assets/js/logout.js"></script>
 
-      <script src="./assets/js/portofolio.js"></script>
+      <script src="./assets/js/history.js"></script>
 
 </body>
 </html>
