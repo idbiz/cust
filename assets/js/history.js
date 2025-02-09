@@ -35,9 +35,14 @@ document.addEventListener("DOMContentLoaded", async function () {
             }
 
             const transactions = await response.json();
-            const filteredTransactions = transactions.filter(tx => 
+
+            // Filter hanya transaksi dari nama pemesan tertentu
+            const filteredTransactions = transactions.filter(tx =>
                 tx.nama_pemesan.toLowerCase() === namaPemesan.toLowerCase()
             );
+
+            // Urutkan transaksi dari yang terbaru ke yang lama
+            filteredTransactions.sort((a, b) => new Date(b.tanggal_pesanan) - new Date(a.tanggal_pesanan));
 
             // Pisahkan transaksi berdasarkan status
             const pendingTransactions = filteredTransactions.filter(tx => tx.status_pesanan.toLowerCase() !== "done");
@@ -69,7 +74,12 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             const statusClass = getStatusClass(transaction.status_pesanan);
 
+            // Cek apakah transaksi terjadi dalam 10 menit terakhir
+            const isRecent = isRecentTransaction(transaction);
+            const recentClass = isRecent ? "bg-green-100" : "";
+
             const row = document.createElement("tr");
+            row.className = recentClass; // Tambahkan kelas background hijau jika transaksi baru
             row.innerHTML = `
                 <td class="py-4 px-2">${formattedDate}</td>
                 <td class="py-4 px-2">${transaction.nama_desain}</td>
@@ -81,6 +91,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             targetTable.appendChild(row);
         });
+    }
+
+    function isRecentTransaction(transaction) {
+        const now = new Date();
+        const tenMinutesAgo = new Date(now.getTime() - 10 * 60 * 1000);
+        const transactionDate = new Date(transaction.tanggal_pesanan);
+        return transactionDate > tenMinutesAgo;
     }
 
     function getStatusClass(status) {
